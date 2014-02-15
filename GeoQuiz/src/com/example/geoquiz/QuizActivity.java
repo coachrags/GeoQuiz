@@ -42,11 +42,11 @@ public class QuizActivity extends Activity {
 	private void checkAnswer(boolean userPressedTrue)
 	{
 		boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
-		
+		boolean hasCheatedOnThisQuestion = mQuestionBank[mCurrentIndex].hasCheated();
 		int messageResId = 0;
 		
-		//if (mIsCheater || mQuestionBank[mCurrentIndex].hasCheated())
-		if (mIsCheater)
+		
+		if (mIsCheater || hasCheatedOnThisQuestion)
 		{
 			messageResId = R.string.judgement_toast;
 		}
@@ -145,11 +145,6 @@ public class QuizActivity extends Activity {
         
         if (savedInstanceState != null){
         	mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
-        	mIsCheater = savedInstanceState.getBoolean(KEY_CHEATER, false);
-        	if (mIsCheater)
-        	{
-        		mQuestionBank[mCurrentIndex].setHasCheated(true);
-        	}
         }
         
         updateQuestion(); 
@@ -209,5 +204,6 @@ public class QuizActivity extends Activity {
     		return;
     	}
     	mIsCheater = data.getBooleanExtra(CheatActivity.EXTRA_ANSWER_SHOWN, false);
+    	mQuestionBank[mCurrentIndex].setHasCheated(mIsCheater);
     }
 }

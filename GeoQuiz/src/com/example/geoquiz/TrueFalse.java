@@ -9,7 +9,7 @@ public class TrueFalse {
 	public TrueFalse(int question, boolean trueQuestion) {
 		mQuestion = question;
 		mTrueQuestion = trueQuestion;
-		setHasCheated(false);
+		mHasCheated = false;
 	}
 
 	public int getQuestion() {
