@@ -1,13 +1,15 @@
 package com.example.geoquiz;
 
 public class TrueFalse {
-	private int mQuestion;
 	
+	private int mQuestion;
 	private boolean mTrueQuestion;
+	private boolean mHasCheated;
 	
 	public TrueFalse(int question, boolean trueQuestion) {
 		mQuestion = question;
 		mTrueQuestion = trueQuestion;
+		setHasCheated(false);
 	}
 
 	public int getQuestion() {
@@ -24,6 +26,14 @@ public class TrueFalse {
 
 	public void setTrueQuestion(boolean trueQuestion) {
 		mTrueQuestion = trueQuestion;
+	}
+	
+	public boolean hasCheated() {
+		return mHasCheated;
+	}
+
+	public void setHasCheated(boolean cheat) {
+		mHasCheated = cheat;
 	}
 	
 	

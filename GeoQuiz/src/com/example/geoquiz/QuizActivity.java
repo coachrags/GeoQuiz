@@ -21,6 +21,7 @@ public class QuizActivity extends Activity {
 	private TextView mQuestionTextView;
 	private static final String TAG = "QuizActivity";
 	private static final String KEY_INDEX = "index";
+	private static final String KEY_CHEATER = "cheater";
 	
 	private TrueFalse[] mQuestionBank = new TrueFalse[] {
 			new TrueFalse(R.string.question_oceans, true),
@@ -44,6 +45,7 @@ public class QuizActivity extends Activity {
 		
 		int messageResId = 0;
 		
+		//if (mIsCheater || mQuestionBank[mCurrentIndex].hasCheated())
 		if (mIsCheater)
 		{
 			messageResId = R.string.judgement_toast;
@@ -143,6 +145,11 @@ public class QuizActivity extends Activity {
         
         if (savedInstanceState != null){
         	mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+        	mIsCheater = savedInstanceState.getBoolean(KEY_CHEATER, false);
+        	if (mIsCheater)
+        	{
+        		mQuestionBank[mCurrentIndex].setHasCheated(true);
+        	}
         }
         
         updateQuestion(); 
@@ -153,6 +160,7 @@ public class QuizActivity extends Activity {
     	super.onSaveInstanceState(savedInstanceState);
     	Log.i(TAG, "onSaveInstanceState");
     	savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+    	savedInstanceState.putBoolean(KEY_CHEATER, mIsCheater);
     	}
     
     @Override
