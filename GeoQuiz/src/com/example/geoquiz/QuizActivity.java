@@ -22,6 +22,7 @@ public class QuizActivity extends Activity {
 	private static final String TAG = "QuizActivity";
 	private static final String KEY_INDEX = "index";
 	private static final String KEY_CHEATER = "cheater";
+	private static final String KEY_CHEAT_STATUS = "questionCheats";
 	
 	private TrueFalse[] mQuestionBank = new TrueFalse[] {
 			new TrueFalse(R.string.question_oceans, true),
@@ -29,6 +30,10 @@ public class QuizActivity extends Activity {
 			new TrueFalse(R.string.question_africa, false),
 			new TrueFalse(R.string.question_americas, true),
 			new TrueFalse(R.string.question_asia, true),
+	};
+	
+	private static boolean[] mQuestionBankCheatStatus = new boolean[]{
+		false, false, false, false, false
 	};
 	
 	private int mCurrentIndex = 0;
@@ -42,11 +47,11 @@ public class QuizActivity extends Activity {
 	private void checkAnswer(boolean userPressedTrue)
 	{
 		boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
-		boolean hasCheatedOnThisQuestion = mQuestionBank[mCurrentIndex].hasCheated();
+		boolean hasCheatedOnThisQuestion = mQuestionBankCheatStatus[mCurrentIndex];
 		int messageResId = 0;
 		
 		
-		if (mIsCheater || hasCheatedOnThisQuestion)
+		if (hasCheatedOnThisQuestion)
 		{
 			messageResId = R.string.judgement_toast;
 		}
@@ -156,6 +161,7 @@ public class QuizActivity extends Activity {
     	Log.i(TAG, "onSaveInstanceState");
     	savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
     	savedInstanceState.putBoolean(KEY_CHEATER, mIsCheater);
+    	savedInstanceState.putBooleanArray(KEY_CHEAT_STATUS, mQuestionBankCheatStatus);
     	}
     
     @Override
@@ -204,6 +210,6 @@ public class QuizActivity extends Activity {
     		return;
     	}
     	mIsCheater = data.getBooleanExtra(CheatActivity.EXTRA_ANSWER_SHOWN, false);
-    	mQuestionBank[mCurrentIndex].setHasCheated(mIsCheater);
+    	mQuestionBankCheatStatus[mCurrentIndex] = mIsCheater;
     }
 }
