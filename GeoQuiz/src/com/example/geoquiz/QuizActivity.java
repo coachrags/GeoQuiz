@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,8 @@ public class QuizActivity extends Activity {
 	private ImageButton mPrevButton;
 	private Button mCheatButton;
 	private TextView mQuestionTextView;
+	private String mAndroidVersion;
+	private TextView mAndroidVersionTextView;
 	private static final String TAG = "QuizActivity";
 	private static final String KEY_INDEX = "index";
 	private static final String KEY_CHEATER = "cheater";
@@ -76,6 +79,11 @@ public class QuizActivity extends Activity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate(Bundle) called");
         setContentView(R.layout.activity_quiz);
+        
+        mAndroidVersionTextView = (TextView)findViewById(R.id.api_level);
+        mAndroidVersion = (getString(R.string.api_level) + " " + Build.VERSION.SDK_INT);
+        mAndroidVersionTextView.setTextColor(Color.BLUE);
+        mAndroidVersionTextView.setText(mAndroidVersion);
         
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
         {
